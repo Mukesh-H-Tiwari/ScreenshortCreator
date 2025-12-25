@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShotCraft - Premium App Screenshot Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <header class="app-header">
+        <div class="logo">
+            <span class="icon">✨</span>
+            <h1>ShotCraft</h1>
+        </div>
+        <nav class="header-actions">
+            <button id="btn-export-current" class="btn btn-secondary">Download</button>
+            <button id="btn-export-all" class="btn btn-primary">Export All</button>
+            <button id="btn-add-screen" class="btn btn-secondary">Add Screen</button>
+        </nav>
+    </header>
+
+    <main class="app-container">
+        <aside class="sidebar left-sidebar">
+            <div class="sidebar-section">
+                <h3>Design</h3>
+                <div class="control-group">
+                    <label>Background Presets</label>
+                    <div class="color-presets">
+                        <button class="color-swatch active"
+                            style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);"
+                            data-bg="linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)"></button>
+                        <button class="color-swatch"
+                            style="background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);"
+                            data-bg="linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)"></button>
+                        <button class="color-swatch"
+                            style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);"
+                            data-bg="linear-gradient(135deg, #10b981 0%, #059669 100%)"></button>
+                        <button class="color-swatch"
+                            style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);"
+                            data-bg="linear-gradient(135deg, #f59e0b 0%, #d97706 100%)"></button>
+                        <button class="color-swatch"
+                            style="background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);"
+                            data-bg="linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)"></button>
+                        <button class="color-swatch" style="background: #1a1a1a;" data-bg="#1a1a1a"></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Mockup</h3>
+                <div class="control-group">
+                    <label>Device</label>
+                    <select id="device-selector" class="form-control">
+                        <option value="iphone15pro">iPhone 15 Pro</option>
+                        <option value="iphone15promax">iPhone 15 Pro Max</option>
+                        <option value="pixel8pro">Google Pixel 8 Pro</option>
+                        <option value="s24ultra">Samsung Galaxy S24 Ultra</option>
+                        <option value="ipadpro">iPad Pro 12.9</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Phone Background</label>
+                    <input type="color" id="input-phone-bg-color" value="#000000" class="color-input">
+                </div>
+
+                <div class="control-group">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="input-status-bar" checked style="width: 18px; height: 18px; cursor: pointer;">
+                        Show Status Bar
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label>Phone Size (W × H)</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="input-mockup-width" class="form-control" placeholder="Width" min="100" max="2500" style="flex: 1;">
+                        <input type="number" id="input-mockup-height" class="form-control" placeholder="Height" min="100" max="3500" style="flex: 1;">
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 6px;">
+                        <input type="range" id="input-mockup-width-range" min="100" max="2500" step="10" class="form-range" style="flex: 1;">
+                        <input type="range" id="input-mockup-height-range" min="100" max="3500" step="10" class="form-range" style="flex: 1;">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Scale</label>
+                    <input type="range" id="input-mockup-scale" min="0.1" max="1.5" step="0.05" value="0.3" class="form-range">
+                </div>
+
+                <div class="control-group">
+                    <label>Position & Rotation</label>
+                    <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                        <div style="flex: 1;">
+                            <label style="font-size: 11px; opacity: 0.6;">Vertical</label>
+                            <input type="range" id="input-mockup-y" min="-500" max="500" step="10" value="0" class="form-range" style="margin-top: 4px;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label style="font-size: 11px; opacity: 0.6;">Rotation</label>
+                            <input type="range" id="input-mockup-rotate" min="-45" max="45" step="1" value="0" class="form-range" style="margin-top: 4px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Image Padding</label>
+                    <input type="range" id="input-image-padding" min="0" max="100" step="5" value="10" class="form-range">
+                </div>
+            </div>
+
+
+            <div class="sidebar-section">
+                <h3>Image Display</h3>
+                <div class="control-group">
+                    <label>Fitting Mode</label>
+                    <select id="select-image-mode" class="form-control">
+                        <option value="contain">Fit (Contain)</option>
+                        <option value="cover">Crop (Cover)</option>
+                        <option value="fill">Stretch (Fill)</option>
+                    </select>
+                </div>
+                <div class="control-group" style="display: flex; gap: 10px;">
+                    <button id="btn-crop-image" class="btn btn-secondary" style="flex: 1;">Crop Image</button>
+                    <button id="btn-remove-image" class="btn btn-secondary" style="flex: 1;">Remove</button>
+                </div>
+            </div>
+
+
+            <div class="sidebar-section">
+                <h3>Text</h3>
+                <div class="control-group">
+                    <label>Heading</label>
+                    <input type="text" id="input-heading" class="form-control" placeholder="Enter heading...">
+                </div>
+                <div class="control-group">
+                    <label>Heading Size</label>
+                    <input type="range" id="input-heading-size" min="40" max="180" step="1" value="110" class="form-range">
+                </div>
+                <div class="control-group">
+                    <label>Heading Position (Top)</label>
+                    <input type="range" id="input-heading-position" min="-200" max="200" step="5" value="0" class="form-range">
+                </div>
+                <div class="control-group">
+                    <label>Subheading</label>
+                    <input type="text" id="input-subheading" class="form-control" placeholder="Enter subheading...">
+                </div>
+                <div class="control-group">
+                    <label>Subheading Size</label>
+                    <input type="range" id="input-subheading-size" min="20" max="100" step="1" value="54" class="form-range">
+                </div>
+                <div class="control-group">
+                    <label>Subheading Position (Top)</label>
+                    <input type="range" id="input-subheading-position" min="-200" max="200" step="5" value="0" class="form-range">
+                </div>
+                <div class="control-group">
+                    <label>Text Color</label>
+                    <input type="color" id="input-text-color" value="#ffffff" class="color-input">
+                </div>
+            </div>
+        </aside>
+
+        <section class="canvas-area">
+            <div id="screenshot-container" class="screenshot-container">
+                <!-- Screens will be injected here -->
+                <div class="screenshot-item active" id="screen-1">
+                    <div class="canvas-background"
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="canvas-content">
+                            <div class="text-layer">
+                                <h2 class="editable-heading" contenteditable="true">Secure WiFi Server</h2>
+                                <p class="editable-subheading" contenteditable="true">Turn your device into a portable
+                                    HTTP server</p>
+                            </div>
+
+                            <div class="device-frame-wrapper">
+                                <div class="device-mockup" data-device="iphone15pro">
+                                    <div class="status-bar"></div>
+                                    <div class="screen-content">
+                                        <div class="upload-placeholder" id="drop-zone">
+                                            <span>Click or drag image</span>
+                                            <input type="file" id="file-input" hidden accept="image/*">
+                                        </div>
+                                        <img id="screenshot-preview" src="" alt="" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="sidebar right-sidebar">
+            <div class="sidebar-section">
+                <h3>Screens</h3>
+                <div class="screens-list" id="screens-list">
+                    <div class="screen-thumb active" data-id="1">
+                        <span>Screen 1</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Crop Modal -->
+    <div id="crop-modal" class="crop-modal hidden">
+        <div class="crop-modal-content">
+            <div class="crop-modal-header">
+                <h3>Crop Image</h3>
+                <button id="crop-close-btn" class="crop-close-btn">&times;</button>
+            </div>
+            <div class="crop-container">
+                <img id="crop-image" src="" alt="Crop preview" class="crop-image">
+                <div id="crop-box" class="crop-box"></div>
+            </div>
+            <div class="crop-modal-footer">
+                <button id="crop-cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="crop-apply-btn" class="btn btn-primary">Apply Crop</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 ShotCraft. All rights reserved.</p>
+    </footer>
+
+    <script src="devices.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
